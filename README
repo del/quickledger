@@ -1,0 +1,13 @@
+# quickledger
+
+quickledger is a tool to allow easy bookkeeping. It will allow you to setup filters which automatically assign transactions to accounts, or suggest accounts and let the user interactively approve/reject the suggestions. The output is a ledger file, for use with the ledger bookkeeping tool.
+
+## Usage
+
+Not usable yet.
+
+## License
+
+Copyright (C) 2011 Daniel Eliasson
+
+Distributed under the Eclipse Public License, the same as Clojure.
