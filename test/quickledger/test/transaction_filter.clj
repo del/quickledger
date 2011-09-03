@@ -157,6 +157,21 @@
     (is (= (filter-transaction trans filters)
            expected))))
 
+(deftest filter-transaction-no-hits-test
+  (let [trans {:date "2011-08-26"
+               :desc "Lolcats"
+               :transfers [{:amount -100.00
+                            :account "Assets:Checking:Nordea"}]}
+        filters [{:certain true
+                  :regex #"dogs"
+                  :transfers [{:account "Expenses:Lolcats"
+                               :amount 0.8}
+                              {:account "Expenses:Vat"
+                               :amount 0.2}]}]
+        expected ()]
+    (is (= (filter-transaction trans filters)
+           expected))))
+
 (deftest filter-transactions-test
   (let [transactions [{:date "2011-08-26"
                         :desc "Lolcats"
