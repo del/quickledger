@@ -3,7 +3,7 @@
   (:use [clojure.test]))
 
 (deftest read-csv-test
-  (is (= (read-csv "testdata/test.csv" "Assets:Checking:Nordea")
+  (is (= (read-csv "testdata/testcsv.csv" "Assets:Checking:Nordea")
          [{:date "2011-08-27"
            :desc "Advice dog"
            :transfers [{:amount -200.00
