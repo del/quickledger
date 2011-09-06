@@ -45,3 +45,6 @@
   (map (fn [trans]
          (filter-transaction trans filters))
        transactions))
+
+(defn read-filters [filename]
+  (load-file filename))
