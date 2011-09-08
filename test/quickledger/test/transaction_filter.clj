@@ -168,7 +168,11 @@
                                :amount 0.8}
                               {:account "Expenses:Vat"
                                :amount 0.2}]}]
-        expected ()]
+        expected {:date "2011-08-26"
+                  :desc "Lolcats"
+                  :certain false
+                  :transfers [{:amount -100.00
+                               :account "Assets:Checking:Nordea"}]}]
     (is (= (filter-transaction trans filters)
            expected))))
 

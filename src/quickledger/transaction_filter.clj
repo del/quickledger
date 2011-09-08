@@ -4,7 +4,7 @@
   (let [matches (remove nil? raw-matches)
         certain-match (first (filter (fn [match] (:certain match)) matches))]
     (if (nil? certain-match)
-      matches
+      (if (empty? matches) nil matches)
       certain-match)))
 
 (defn calc-transfer [full-amount transfer]
@@ -37,14 +37,16 @@
       :certain (:certain filter))))
 
 (defn filter-transaction [trans filters]
-  (select-match (map (fn [filter]
-                       (apply-filter-to-transaction trans filter))
-                     filters)))
+  (let [match
+        (select-match (map (fn [filter]
+                             (apply-filter-to-transaction trans filter))
+                           filters))]
+    (if (nil? match) (assoc trans :certain false) match)))
 
 (defn filter-transactions [transactions filters]
-  (map (fn [trans]
-         (filter-transaction trans filters))
-       transactions))
+  (remove nil? (map (fn [trans]
+                      (filter-transaction trans filters))
+                    transactions)))
 
 (defn read-filters [filename]
   (load-file filename))
