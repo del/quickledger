@@ -8,3 +8,4 @@ pom.xml
 *.clj~
 testdata/export.csv
 testdata/testout.dat
+tmp/
