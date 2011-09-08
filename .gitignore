@@ -6,6 +6,4 @@ pom.xml
 .lein-failures
 .lein-deps-sum
 *.clj~
-testdata/export.csv
-testdata/testout.dat
 tmp/

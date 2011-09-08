@@ -4,8 +4,8 @@
   (:use [clojure.test]))
 
 (deftest apply-filter-file-to-csv-file-test
-  (let [filter-file "testdata/testfilters.clj"
-        csv-file "testdata/testcsv.csv"
+  (let [filter-file "data/test/testfilters.clj"
+        csv-file "data/test/testcsv.csv"
         account-name "Assets:Checking:Nordea"
         expected [[{:date "2011-08-27"
                     :desc "Advice dogs"

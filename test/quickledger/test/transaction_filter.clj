@@ -238,7 +238,7 @@
                         :desc "Advice dogs"
                         :transfers [{:amount -200.00
                                      :account "Assets:Checking:Nordea"}]}]
-        filterfile "testdata/testfilters.clj"
+        filterfile "data/test/testfilters.clj"
         expected [{:date "2011-08-26"
                    :desc "Lolcats"
                    :certain true
