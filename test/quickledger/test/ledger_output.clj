@@ -85,6 +85,7 @@
 (deftest transactions-to-str-test
   (let [transactions [{:date "2011-08-26"
                        :desc "Lolcats"
+                       :certain true
                        :transfers [{:account "Assets:Checking:Nordea"
                                     :amount -100.00}
                                    {:account "Expenses:Lolcats"
@@ -93,20 +94,66 @@
                                     :amount 20.0}]}
                       {:date "2011-08-27"
                        :desc "Advice dogs"
+                       :certain false
                        :transfers [{:account "Assets:Checking:Nordea"
                                     :amount -200.00}
                                    {:account "Expenses:Raccoons"
                                     :amount 100.0}
                                    {:account "Expenses:Toiletries"
                                     :amount 100.0}]}]
-        expected ["2011-08-26 Lolcats"
-                  "  Assets:Checking:Nordea  -100.00"
-                  "  Expenses:Lolcats          80.00"
-                  "  Expenses:Vat              20.00"
-                  ""
-                  "2011-08-27 Advice dogs"
-                  "  Assets:Checking:Nordea  -200.00"
-                  "  Expenses:Raccoons        100.00"
-                  "  Expenses:Toiletries      100.00"
-                  ""]]
+        expected (str "2011-08-26 Lolcats\n"
+                      "  Assets:Checking:Nordea  -100.00\n"
+                      "  Expenses:Lolcats          80.00\n"
+                      "  Expenses:Vat              20.00\n"
+                      "\n"
+                      "!!!2011-08-27 Advice dogs\n"
+                      "  Assets:Checking:Nordea  -200.00\n"
+                      "  Expenses:Raccoons        100.00\n"
+                      "  Expenses:Toiletries      100.00\n"
+                      "\n")]
+    (is (= (transactions-to-str transactions) expected))))
+
+(deftest transactions-to-str-with-lists-test
+  (let [transactions [{:date "2011-08-26"
+                       :desc "Lolcats"
+                       :certain true
+                       :transfers [{:account "Assets:Checking:Nordea"
+                                    :amount -100.00}
+                                   {:account "Expenses:Lolcats"
+                                    :amount 80.0}
+                                   {:account "Expenses:Vat"
+                                    :amount 20.0}]}
+                      [{:date "2011-08-27"
+                        :desc "Advice dogs"
+                        :certain false
+                        :transfers [{:account "Assets:Checking:Nordea"
+                                     :amount -200.00}
+                                    {:account "Expenses:Raccoons"
+                                     :amount 100.0}
+                                    {:account "Expenses:Toiletries"
+                                     :amount 100.0}]}
+                       {:date "2011-08-27"
+                        :desc "Advice dogs"
+                        :certain false
+                        :transfers [{:account "Assets:Checking:Nordea"
+                                     :amount -200.00}
+                                    {:account "Expenses:Raccoons"
+                                     :amount 80.0}
+                                    {:account "Expenses:Toiletries"
+                                     :amount 120.0}]}]]
+        expected (str "2011-08-26 Lolcats\n"
+                      "  Assets:Checking:Nordea  -100.00\n"
+                      "  Expenses:Lolcats          80.00\n"
+                      "  Expenses:Vat              20.00\n"
+                      "\n"
+                      "!!!2011-08-27 Advice dogs\n"
+                      "  Assets:Checking:Nordea  -200.00\n"
+                      "  Expenses:Raccoons        100.00\n"
+                      "  Expenses:Toiletries      100.00\n"
+                      "\n"
+                      "!!!2011-08-27 Advice dogs\n"
+                      "  Assets:Checking:Nordea  -200.00\n"
+                      "  Expenses:Raccoons         80.00\n"
+                      "  Expenses:Toiletries      120.00\n"
+                      "\n")]
     (is (= (transactions-to-str transactions) expected))))

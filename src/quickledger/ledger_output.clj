@@ -33,14 +33,22 @@
                          amount-width))
          transfers)))
 
+(defn trans-header [trans]
+  (str (if (:certain trans) "" "!!!")
+       (:date trans) " " (:desc trans)))
+
 (defn trans-to-str [trans]
   (conj
-   (vec (cons (str (:date trans) " " (:desc trans))
+   (vec (cons (trans-header trans)
               (transfers-to-str (:transfers trans))))
    ""))
 
 (defn transactions-to-str [transactions]
-  (flatten (map trans-to-str transactions)))
+  (apply str (map
+              (fn [string] (str string "\n"))
+              (flatten (map trans-to-str (flatten transactions))))))
 
 (defn print-transactions-to-file [filename transactions]
-  (clojure.contrib.io/write-lines filename transactions))
+  (with-open [file (clojure.java.io/writer
+                    (clojure.java.io/file filename) :append true)]
+    (spit file (transactions-to-str transactions))))
