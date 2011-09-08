@@ -5,7 +5,7 @@
 (deftest read-csv-test
   (is (= (read-csv "testdata/testcsv.csv" "Assets:Checking:Nordea")
          [{:date "2011-08-27"
-           :desc "Advice dog"
+           :desc "Advice dogs"
            :transfers [{:amount -200.00
                         :account "Assets:Checking:Nordea"}]}
           {:date "2011-08-26"
