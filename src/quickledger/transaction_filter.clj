@@ -30,11 +30,16 @@
               (:regex filter)
               (:desc trans)))
     nil
-    (assoc
-      (add-transfers-to-transaction
-       trans
-       (:transfers filter))
-      :certain (:certain filter))))
+    (let [trans-with-transfers
+          (assoc
+              (add-transfers-to-transaction
+               trans
+               (:transfers filter))
+            :certain (:certain filter))]
+      (if (nil? (:desc filter))
+        trans-with-transfers
+        (assoc trans-with-transfers
+          :desc (:desc filter))))))
 
 (defn filter-transaction [trans filters]
   (let [match

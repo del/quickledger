@@ -24,7 +24,7 @@
                                 {:account "Expenses:Goats"
                                  :amount 200.0}]}]
                   {:date "2011-08-26"
-                   :desc "Lolcats"
+                   :desc "Cat with gherkins"
                    :certain true
                    :transfers [{:account "Assets:Checking:Nordea"
                                 :amount -100.00}

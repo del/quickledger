@@ -198,6 +198,7 @@
                               {:account "Expenses:Toiletries"
                                :amount 0.5}]}
                  {:certain false
+                  :desc "Dog with goatee"
                   :regex #"dogs"
                   :transfers [{:account "Expenses:Goats"
                                :amount 1.0}]}]
@@ -220,7 +221,7 @@
                                 {:account "Expenses:Toiletries"
                                  :amount 100.0}]}
                    {:date "2011-08-27"
-                    :desc "Advice dogs"
+                    :desc "Dog with goatee"
                     :certain false
                     :transfers [{:account "Assets:Checking:Nordea"
                                  :amount -200.00}
@@ -240,7 +241,7 @@
                                      :account "Assets:Checking:Nordea"}]}]
         filterfile "data/test/testfilters.clj"
         expected [{:date "2011-08-26"
-                   :desc "Lolcats"
+                   :desc "Cat with gherkins"
                    :certain true
                    :transfers [{:account "Assets:Checking:Nordea"
                                 :amount -100.00}
