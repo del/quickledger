@@ -6,4 +6,5 @@ pom.xml
 .lein-failures
 .lein-deps-sum
 *.clj~
+*.dat
 tmp/
