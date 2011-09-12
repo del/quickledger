@@ -1,4 +1,5 @@
 (ns quickledger.core
+  (:gen-class)
   (:require quickledger.nordea-parser)
   (:require quickledger.transaction-filter)
   (:require quickledger.ledger-output)

@@ -1,4 +1,5 @@
-(ns quickledger.transaction-filter)
+(ns quickledger.transaction-filter
+  (:gen-class))
 
 (defn select-match [raw-matches]
   (let [matches (remove nil? raw-matches)

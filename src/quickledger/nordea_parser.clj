@@ -1,4 +1,5 @@
 (ns quickledger.nordea-parser
+  (:gen-class)
   (:require clojure-csv.core))
 
 (defn filter-nordea-csv [csvline account]

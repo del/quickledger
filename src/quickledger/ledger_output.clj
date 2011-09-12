@@ -1,4 +1,5 @@
 (ns quickledger.ledger-output
+  (:gen-class)
   (:require clojure.contrib.io))
 
 (defn calc-amount-width [transfers]
