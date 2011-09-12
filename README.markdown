@@ -5,7 +5,7 @@ quickledger is a tool to allow easy bookkeeping. It will allow you to setup filt
 ## Installation
 
 ### From binary
-[Download the binary](https://github.com/downloads/del/quickledger/quickledger-1.0.0-standalone.jar) and use it as described below.
+[Download the binary](https://github.com/downloads/del/quickledger/quickledger-1.0.0-standalone.jar "quickledger-1.0.0-standalone.jar") and use it as described below.
 
 ### From source
 Assuming you're using leiningen, the steps are:
