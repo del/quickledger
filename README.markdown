@@ -1,11 +1,11 @@
-# quickledger
+# quickledger v1.1.0
 
 quickledger is a tool to allow easy bookkeeping. It will allow you to setup filters which automatically assign transactions to accounts, or suggest accounts and let the user interactively approve/reject the suggestions. The output is a ledger file, for use with the ledger bookkeeping tool.
 
 ## Installation
 
 ### From binary
-[Download the binary](https://github.com/downloads/del/quickledger/quickledger-1.0.0-standalone.jar "quickledger-1.0.0-standalone.jar") and use it as described below.
+[Download the binary](https://github.com/downloads/del/quickledger/quickledger-1.1.0-standalone.jar "quickledger-1.1.0-standalone.jar") and use it as described below.
 
 ### From source
 Assuming you're using leiningen, the steps are:
