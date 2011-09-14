@@ -46,15 +46,15 @@ A filter file contains a list of filters, each filter being a map data structure
                  {:account "Expenses:Vat"
                   :amount 0.2}]}
 
-The :regex variable is a regular expression that matches against the description of a transaction. If a match is found, the filter gets applied to that transaction.
+The `:regex` variable is a regular expression that matches against the description of a transaction. If a match is found, the filter gets applied to that transaction.
 
-If :certain is set to true, the resulting transaction gets inserted into the ledger output file, and no other filters that match the transaction will be considered. If more than one :certain filter matches a transaction, the first one is used.
+If `:certain` is set to true, the resulting transaction gets inserted into the ledger output file, and no other filters that match the transaction will be considered. If more than one :certain filter matches a transaction, the first one is used.
 
-If :certain is false, the resulting transaction gets output prepended by three exclamation marks (!!!), and other filters are also considered.
+If `:certain` is false, the resulting transaction gets output prepended by three exclamation marks (!!!), and other filters are also considered.
 
-If the :desc variable is set, the description from the input file is discarded in favour of the filter's description.
+If the `:desc` variable is set, the description from the input file is discarded in favour of the filter's description.
 
-Finally, the :transfers variable holds a list of transfers that setup the "other side" of the transaction. Each transfer is a simple map with a variable :account which is the account that transfer applies to, and :amount, which is a fraction of the transaction amount. These must sum to 1.0 for the ledger output file to be valid. The resulting amounts will have the opposite sign of the input transaction's single transfer's amount, so the accounts will balance.
+Finally, the `:transfers` variable holds a list of transfers that setup the "other side" of the transaction. Each transfer is a simple map with a variable :account which is the account that transfer applies to, and :amount, which is a fraction of the transaction amount. These must sum to 1.0 for the ledger output file to be valid. The resulting amounts will have the opposite sign of the input transaction's single transfer's amount, so the accounts will balance.
 
 As an example, applying the filter above to this transaction:
 
