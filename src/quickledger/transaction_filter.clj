@@ -9,9 +9,12 @@
       certain-match)))
 
 (defn calc-transfer [full-amount transfer]
-  (assoc
-    transfer
-    :amount (- (* (:amount transfer) full-amount))))
+  (let [amount (:amount transfer)]
+    (assoc transfer
+      :amount
+      (if (and (<= 0.0 amount) (<= amount 1.0))
+        (- (* amount full-amount))
+        amount))))
 
 (defn calc-transfers [first-transfer filter-transfers]
   (let [full-amount (:amount first-transfer)]
