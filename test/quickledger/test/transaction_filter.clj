@@ -24,14 +24,21 @@
                   :dummy 3}]]
     (is (= (select-match matches) (remove nil? matches)))))
 
-(deftest calc-transfer-test
+(deftest calc-transfer-relative-amount-test
   (let [transfer {:account "Expenses:Lolcats"
                   :amount 0.8}
         expected {:account "Expenses:Lolcats"
                   :amount 80.0}]
     (is (= (calc-transfer -100.0 transfer) expected))))
 
-(deftest calc-transfers-test
+(deftest calc-transfer-fixed-amount-test
+  (let [transfer {:account "Expenses:Lolcats"
+                  :amount 80.0}
+        expected {:account "Expenses:Lolcats"
+                  :amount 80.0}]
+    (is (= (calc-transfer -100.0 transfer) expected))))
+
+(deftest calc-transfers-relative-amounts-test
   (let [first-transfer {:account "Assets:Checking:Nordea"
                         :amount -100.0}
         filter-transfers [{:account "Expenses:Lolcats"
@@ -44,6 +51,22 @@
                    :amount 80.0}
                   {:account "Expenses:Vat"
                    :amount 20.0}]]
+    (is (= (calc-transfers first-transfer filter-transfers)
+           expected))))
+
+(deftest calc-transfers-fixed-amounts-test
+  (let [first-transfer {:account "Assets:Checking:Nordea"
+                        :amount 100.0}
+        filter-transfers [{:account "Income:Lolcat sales"
+                           :amount -180.0}
+                          {:account "Expenses:Income taxes"
+                           :amount 80.0}]
+        expected [{:account "Assets:Checking:Nordea"
+                   :amount 100.0}
+                  {:account "Income:Lolcat sales"
+                   :amount -180.0}
+                  {:account "Expenses:Income taxes"
+                   :amount 80.0}]]
     (is (= (calc-transfers first-transfer filter-transfers)
            expected))))
 

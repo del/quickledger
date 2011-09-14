@@ -14,4 +14,4 @@
  {:certain false
   :regex #"dogs"
   :transfers [{:account "Expenses:Goats"
-               :amount 1.0}]}]
+               :amount 200.0}]}]

@@ -1,11 +1,11 @@
-# quickledger
+# quickledger v1.1.0
 
 quickledger is a tool to allow easy bookkeeping. It will allow you to setup filters which automatically assign transactions to accounts, or suggest accounts and let the user interactively approve/reject the suggestions. The output is a ledger file, for use with the ledger bookkeeping tool.
 
 ## Installation
 
 ### From binary
-Download the binary and use it as described below.
+[Download the binary](https://github.com/downloads/del/quickledger/quickledger-1.1.0-standalone.jar "quickledger-1.1.0-standalone.jar") and use it as described below.
 
 ### From source
 Assuming you're using leiningen, the steps are:
@@ -46,17 +46,23 @@ A filter file contains a list of filters, each filter being a map data structure
                  {:account "Expenses:Vat"
                   :amount 0.2}]}
 
-The :regex variable is a regular expression that matches against the description of a transaction. If a match is found, the filter gets applied to that transaction.
+The `:regex` variable is a regular expression that matches against the description of a transaction. If a match is found, the filter gets applied to that transaction.
 
-If :certain is set to true, the resulting transaction gets inserted into the ledger output file, and no other filters that match the transaction will be considered. If more than one :certain filter matches a transaction, the first one is used.
+If `:certain` is set to true, the resulting transaction gets inserted into the ledger output file, and no other filters that match the transaction will be considered. If more than one `:certain` filter matches a transaction, the first one is used.
 
-If :certain is false, the resulting transaction gets output prepended by three exclamation marks (!!!), and other filters are also considered.
+If `:certain` is false, the resulting transaction gets output prepended by three exclamation marks (!!!), and other filters are also considered.
 
-If the :desc variable is set, the description from the input file is discarded in favour of the filter's description.
+If the `:desc` variable is set, the description from the input file is discarded in favour of the filter's description.
 
-Finally, the :transfers variable holds a list of transfers that setup the "other side" of the transaction. Each transfer is a simple map with a variable :account which is the account that transfer applies to, and :amount, which is a fraction of the transaction amount. These must sum to 1.0 for the ledger output file to be valid. The resulting amounts will have the opposite sign of the input transaction's single transfer's amount, so the accounts will balance.
+Finally, the `:transfers` variable holds a list of transfers that setup the "other side" of the transaction. Each transfer is a simple map with a variable `:account` which is the account that transfer applies to, and `:amount`, which specifies the amount of the transfer.
 
-As an example, applying the filter above to this transaction:
+If `:amount` is between 0.0 and 1.0, it is considered a fraction of the transaction amount, and is multiplied with the negative of the transaction amount. I.e. when specifying an `:amount` of 0.5 for a transaction of value 100.00, the transfer gets the value -50.00.
+
+If `:amount` is any other number, it is taken as is, and without negation, i.e. an `:amount` of 50.00 will give exactly that in the transfer.
+
+It is up to the user to ensure the amounts specified in the filter will sum to the full value of the transaction, or the resulting ledger file will be broken due to accounts not balancing.
+
+As a final example, applying the filter above to this transaction:
 
     2011-09-12,Lolcats,Assets:Checking:Nordea,-100.00
 
