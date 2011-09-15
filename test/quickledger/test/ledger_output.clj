@@ -11,6 +11,15 @@
                     :amount 20.0}]]
     (is (= (calc-amount-width transfers) 8))))
 
+(deftest calc-amount-width-with-integer-test
+  (let [transfers [{:account "Assets:Checking:Nordea"
+                    :amount -100}
+                   {:account "Expenses:Lolcats"
+                    :amount 80}
+                   {:account "Expenses:Vat"
+                    :amount 20}]]
+    (is (= (calc-amount-width transfers) 8))))
+
 (deftest calc-account-width-test
   (let [transfers [{:account "Assets:Checking:Nordea"
                     :amount -100.00}
