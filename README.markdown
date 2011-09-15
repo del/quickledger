@@ -31,7 +31,7 @@ Assuming you're using leiningen, the steps are:
 ## Usage
 quickledger is simple to use, you just need to specify the input file, the name of the account it relates to, the output file, the filters file and the parser to use. At this time, the only available parser is nordea.
 
-    java -jar quickledger-1.0.0-standalone.jar -i export.csv -a "Assets:Checking:Nordea" -f filters.clj -p nordea -o ledgerfile.dat
+    java -jar quickledger-1.2.0-standalone.jar -i export.csv -a "Assets:Checking:Nordea" -f filters.clj -p nordea -o ledgerfile.dat
 
 ## Filter files
 Filters are stored in a file with Clojure syntax, and the easiest way to get started is to refer to the file data/testfilters.clj for examples.
