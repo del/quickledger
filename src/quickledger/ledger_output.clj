@@ -5,7 +5,7 @@
 (defn calc-amount-width [transfers]
   (+ 1 (reduce max (map
                     (fn [transfer]
-                      (.length (format "%.2f" (:amount transfer))))
+                      (.length (format "%.2f" (float (:amount transfer)))))
                     transfers))))
 
 (defn calc-account-width [transfers]
@@ -14,7 +14,7 @@
                         transfers))))
 
 (defn amount-with-padding [amount pad-length]
-  (format (format "%% %d.2f" pad-length) amount))
+  (format (format "%% %d.2f" pad-length) (float amount)))
 
 (defn account-with-padding [account pad-length]
   (format (format "%%-%ds" pad-length) account))
