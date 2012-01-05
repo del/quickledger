@@ -1,6 +1,7 @@
 (ns quickledger.core
   (:gen-class)
   (:require quickledger.nordea-parser)
+  (:require quickledger.seb-parser)
   (:require quickledger.transaction-filter)
   (:require quickledger.ledger-output)
   (:use clojure.tools.cli))
@@ -30,7 +31,8 @@
     stats))
 
 (def parsing-functions
-  {"nordea" quickledger.nordea-parser/read-csv})
+  {"nordea" quickledger.nordea-parser/read-csv
+   "seb" quickledger.seb-parser/read-csv})
 
 (defn -main [& args]
   (let [parsed-args
@@ -39,7 +41,7 @@
              (required ["-i" "--input" "The input file of transactions"])
              (required ["-o" "--output" "The output ledger file"])
              (required ["-f" "--filters" "The filter file to use"])
-             (required ["-p" "--parser" "The parser to apply to the file" :default "nordea"]))
+             (required ["-p" "--parser" "The parser to apply to the file"]))
         stats (apply-filter-file-to-csv-file-and-save-to-ledger-file
                (:filters parsed-args)
                (:input parsed-args)
