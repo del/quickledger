@@ -1,4 +1,4 @@
-(defproject quickledger "1.2.0"
+(defproject quickledger "2.0.0"
   :description "quickledger"
   :url "http://github.com/del/quickledger"
   :dependencies [[org.clojure/clojure "1.2.1"]
