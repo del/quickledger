@@ -2,15 +2,6 @@
   (:use [quickledger.transaction-filter])
   (:use [clojure.test]))
 
-(deftest sort-transactions-test
-  (let [transactions [{:date "2011-01-01"}
-                      {:date "2011-02-02"}
-                      {:date "2010-03-03"}]
-        expected [{:date "2010-03-03"}
-                  {:date "2011-01-01"}
-                  {:date "2011-02-02"}]]
-    (is (= (sort-transactions transactions) expected))))
-
 (deftest select-match-certain-test
   (let [matches [{:certain false
                   :dummy 1}
@@ -272,7 +263,16 @@
                        :transfers [{:amount -200.00
                                     :account "Assets:Checking:Nordea"}]}]
         filterfile "data/test/testfilters.clj"
-        expected [[{:date "2011-08-27"
+        expected [{:date "2011-09-26"
+                   :desc "Cat with gherkins"
+                   :certain true
+                   :transfers [{:account "Assets:Checking:Nordea"
+                                :amount -100.00}
+                               {:account "Expenses:Lolcats"
+                                :amount 80.0}
+                               {:account "Expenses:Vat"
+                                :amount 20.0}]}
+                  [{:date "2011-08-27"
                     :desc "Advice dogs"
                     :certain false
                     :transfers [{:account "Assets:Checking:Nordea"
@@ -287,15 +287,6 @@
                     :transfers [{:account "Assets:Checking:Nordea"
                                  :amount -200.00}
                                 {:account "Expenses:Goats"
-                                 :amount 200.0}]}]
-                  {:date "2011-09-26"
-                   :desc "Cat with gherkins"
-                   :certain true
-                   :transfers [{:account "Assets:Checking:Nordea"
-                                :amount -100.00}
-                               {:account "Expenses:Lolcats"
-                                :amount 80.0}
-                               {:account "Expenses:Vat"
-                                :amount 20.0}]}]]
+                                 :amount 200.0}]}]]]
     (is (= (filter-transactions transactions (read-filters filterfile))
            expected))))

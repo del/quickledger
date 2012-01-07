@@ -1,19 +1,26 @@
 (ns quickledger.core
   (:gen-class)
+  (:require quickledger.ledger-reader)
+  (:require quickledger.ledger-output)
   (:require quickledger.nordea-parser)
   (:require quickledger.seb-parser)
   (:require quickledger.transaction-filter)
-  (:require quickledger.ledger-output)
   (:use clojure.tools.cli))
+
+(defn sort-transactions [transactions]
+  (sort-by :date transactions))
 
 (defn apply-filter-file-to-csv-file [filter-file
                                      csv-file
+                                     ledger-file
                                      account-name
                                      csv-read-function]
   (let [transactions (csv-read-function csv-file account-name)
+        old-transactions (quickledger.ledger-reader/read-file ledger-file)
         filters (quickledger.transaction-filter/read-filters filter-file)]
-    (quickledger.transaction-filter/filter-transactions
-     transactions filters)))
+    (sort-transactions (flatten (concat old-transactions
+                                        (quickledger.transaction-filter/filter-transactions
+                                         transactions filters))))))
 
 (defn apply-filter-file-to-csv-file-and-save-to-ledger-file [filter-file
                                                              csv-file
@@ -22,6 +29,7 @@
                                                              csv-read-function]
   (let [filtered-transactions (apply-filter-file-to-csv-file filter-file
                                                              csv-file
+                                                             ledger-file
                                                              account-name
                                                              csv-read-function)
         stats {:number-of-transactions (count filtered-transactions)

@@ -47,9 +47,9 @@
 (defn transactions-to-str [transactions]
   (apply str (map
               (fn [string] (str string "\n"))
-              (flatten (map trans-to-str (flatten transactions))))))
+              (flatten (map trans-to-str transactions)))))
 
 (defn print-transactions-to-file [filename transactions]
   (with-open [file (clojure.java.io/writer
-                    (clojure.java.io/file filename) :append true)]
+                    (clojure.java.io/file filename) :append false)]
     (spit file (transactions-to-str transactions))))

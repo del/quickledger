@@ -1,9 +1,6 @@
 (ns quickledger.transaction-filter
   (:gen-class))
 
-(defn sort-transactions [transactions]
-  (sort-by :date transactions))
-
 (defn select-match [raw-matches]
   (let [matches (remove nil? raw-matches)
         certain-match (first (filter (fn [match] (:certain match)) matches))]
@@ -58,7 +55,7 @@
 (defn filter-transactions [transactions filters]
   (remove nil? (map (fn [trans]
                       (filter-transaction trans filters))
-                    (sort-transactions transactions))))
+                    transactions)))
 
 (defn read-filters [filename]
   (load-file filename))
