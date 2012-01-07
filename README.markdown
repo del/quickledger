@@ -41,10 +41,10 @@ A filter file contains a list of filters, each filter being a map data structure
     {:certain true
      :regex #"cats"
      :desc "Cat with gherkins"
-     :transfers [{:account "Expenses:Lolcats"
-                  :amount 0.8}
-                 {:account "Expenses:Vat"
-                  :amount 0.2}]}
+     :entries [{:account "Expenses:Lolcats"
+                :amount 0.8}
+               {:account "Expenses:Vat"
+                :amount 0.2}]}
 
 The `:regex` variable is a regular expression that matches against the description of a transaction. If a match is found, the filter gets applied to that transaction.
 
@@ -54,11 +54,11 @@ If `:certain` is false, the resulting transaction gets output prepended by three
 
 If the `:desc` variable is set, the description from the input file is discarded in favour of the filter's description.
 
-Finally, the `:transfers` variable holds a list of transfers that setup the "other side" of the transaction. Each transfer is a simple map with a variable `:account` which is the account that transfer applies to, and `:amount`, which specifies the amount of the transfer.
+Finally, the `:entries` variable holds a list of transfers that setup the "other side" of the transaction. Each entry is a simple map with a variable `:account` which is the account the transfer applies to, and `:amount`, which specifies the amount of the transfer.
 
-If `:amount` is between 0.0 and 1.0, it is considered a fraction of the transaction amount, and is multiplied with the negative of the transaction amount. I.e. when specifying an `:amount` of 0.5 for a transaction of value 100.00, the transfer gets the value -50.00.
+If `:amount` is between 0.0 and 1.0, it is considered a fraction of the transaction amount, and is multiplied with the negative of the transaction amount. I.e. when specifying an `:amount` of 0.5 for a transaction of value 100.00, the entry gets the value -50.00.
 
-If `:amount` is any other number, it is taken as is, and without negation, i.e. an `:amount` of 50.00 will give exactly that in the transfer.
+If `:amount` is any other number, it is taken as is, and without negation, i.e. an `:amount` of 50.00 will give exactly that in the entry.
 
 It is up to the user to ensure the amounts specified in the filter will sum to the full value of the transaction, or the resulting ledger file will be broken due to accounts not balancing.
 

@@ -2,16 +2,16 @@
   (:gen-class)
   (:require clojure.contrib.io))
 
-(defn calc-amount-width [transfers]
+(defn calc-amount-width [entries]
   (+ 1 (reduce max (map
-                    (fn [transfer]
-                      (.length (format "%.2f" (float (:amount transfer)))))
-                    transfers))))
+                    (fn [entry]
+                      (.length (format "%.2f" (float (:amount entry)))))
+                    entries))))
 
-(defn calc-account-width [transfers]
-  (+ 1 (reduce max (map (fn [transfer]
-                          (.length (:account transfer)))
-                        transfers))))
+(defn calc-account-width [entries]
+  (+ 1 (reduce max (map (fn [entry]
+                          (.length (:account entry)))
+                        entries))))
 
 (defn amount-with-padding [amount pad-length]
   (format (format "%% %d.2f" pad-length) (float amount)))
@@ -19,35 +19,35 @@
 (defn account-with-padding [account pad-length]
   (format (format "%%-%ds" pad-length) account))
 
-(defn transfer-to-str [transfer account-width amount-width]
+(defn entry-to-str [entry account-width amount-width]
   (str
    "  "
-   (account-with-padding (:account transfer) account-width)
-   (amount-with-padding (:amount transfer) amount-width)))
+   (account-with-padding (:account entry) account-width)
+   (amount-with-padding (:amount entry) amount-width)))
 
-(defn transfers-to-str [transfers]
-  (let [account-width (calc-account-width transfers)
-        amount-width (calc-amount-width transfers)]
-    (map (fn [transfer] (transfer-to-str
-                         transfer
+(defn entries-to-str [entries]
+  (let [account-width (calc-account-width entries)
+        amount-width (calc-amount-width entries)]
+    (map (fn [entry] (entry-to-str
+                         entry
                          account-width
                          amount-width))
-         transfers)))
+         entries)))
 
-(defn trans-header [trans]
-  (str (if (:certain trans) "" "!!!")
-       (:date trans) " " (:desc trans)))
+(defn transaction-header [transaction]
+  (str (if (:certain transaction) "" "!!!")
+       (:date transaction) " " (:desc transaction)))
 
-(defn trans-to-str [trans]
+(defn transaction-to-str [transaction]
   (conj
-   (vec (cons (trans-header trans)
-              (transfers-to-str (:transfers trans))))
+   (vec (cons (transaction-header transaction)
+              (entries-to-str (:entries transaction))))
    ""))
 
 (defn transactions-to-str [transactions]
   (apply str (map
               (fn [string] (str string "\n"))
-              (flatten (map trans-to-str transactions)))))
+              (flatten (map transaction-to-str transactions)))))
 
 (defn print-transactions-to-file [filename transactions]
   (with-open [file (clojure.java.io/writer

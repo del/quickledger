@@ -8,53 +8,53 @@
       (if (empty? matches) nil matches)
       certain-match)))
 
-(defn calc-transfer [full-amount transfer]
-  (let [amount (:amount transfer)]
-    (assoc transfer
+(defn calc-entry [full-amount entry]
+  (let [amount (:amount entry)]
+    (assoc entry
       :amount
       (if (and (<= 0.0 amount) (<= amount 1.0))
         (- (* amount full-amount))
         amount))))
 
-(defn calc-transfers [first-transfer filter-transfers]
-  (let [full-amount (:amount first-transfer)]
-    (cons first-transfer
-          (map (fn [transfer]
-                 (calc-transfer full-amount transfer))
-               filter-transfers))))
+(defn calc-entries [first-entry filter-entries]
+  (let [full-amount (:amount first-entry)]
+    (cons first-entry
+          (map (fn [entry]
+                 (calc-entry full-amount entry))
+               filter-entries))))
 
-(defn add-transfers-to-transaction [trans filter-transfers]
-  (let [first-transfer (first (:transfers trans))]
+(defn add-entries-to-transaction [transaction filter-entries]
+  (let [first-entry (first (:entries transaction))]
     (assoc
-      trans
-      :transfers (calc-transfers first-transfer filter-transfers))))
+      transaction
+      :entries (calc-entries first-entry filter-entries))))
 
-(defn apply-filter-to-transaction [trans filter]
+(defn apply-filter-to-transaction [transaction filter]
   (if (= nil (re-find
               (:regex filter)
-              (:desc trans)))
+              (:desc transaction)))
     nil
-    (let [trans-with-transfers
+    (let [transaction-with-entries
           (assoc
-              (add-transfers-to-transaction
-               trans
-               (:transfers filter))
+              (add-entries-to-transaction
+               transaction
+               (:entries filter))
             :certain (:certain filter))]
       (if (nil? (:desc filter))
-        trans-with-transfers
-        (assoc trans-with-transfers
+        transaction-with-entries
+        (assoc transaction-with-entries
           :desc (:desc filter))))))
 
-(defn filter-transaction [trans filters]
+(defn filter-transaction [transaction filters]
   (let [match
         (select-match (map (fn [filter]
-                             (apply-filter-to-transaction trans filter))
+                             (apply-filter-to-transaction transaction filter))
                            filters))]
-    (if (nil? match) (assoc trans :certain false) match)))
+    (if (nil? match) (assoc transaction :certain false) match)))
 
 (defn filter-transactions [transactions filters]
-  (remove nil? (map (fn [trans]
-                      (filter-transaction trans filters))
+  (remove nil? (map (fn [transaction]
+                      (filter-transaction transaction filters))
                     transactions)))
 
 (defn read-filters [filename]

@@ -4,10 +4,10 @@
   (:require [clojure.string :as string]))
 
 (defn filter-seb-csv [csvline account]
-  {:date (nth csvline 0)
-   :desc (string/capitalize (string/trim (nth csvline 3)))
-   :transfers [{:amount (Float/parseFloat (nth csvline 4))
-                :account account}]})
+  {:date    (nth csvline 0)
+   :desc    (string/capitalize (string/trim (nth csvline 3)))
+   :entries [{:amount (Float/parseFloat (nth csvline 4))
+              :account account}]})
 
 (defn header-or-empty? [index item]
   (or (< index 5) (< (count item) 6)))
