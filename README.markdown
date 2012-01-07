@@ -29,7 +29,7 @@ Assuming you're using leiningen, the steps are:
 5. Done! You can now use quickledger as described below.
 
 ## Usage
-quickledger is simple to use, you just need to specify the input file, the name of the account it relates to, the output file, the filters file and the parser to use. At this time, the only available parser is nordea.
+quickledger is simple to use, you just need to specify the input file, the name of the account it relates to, the output file, the filters file and the parser to use. At this time, the available parsers are nordea and seb, two Swedish banks.
 
     java -jar quickledger-2.0.0-standalone.jar -i export.csv -a "Assets:Checking:Nordea" -f filters.clj -p nordea -o ledgerfile.dat
 
